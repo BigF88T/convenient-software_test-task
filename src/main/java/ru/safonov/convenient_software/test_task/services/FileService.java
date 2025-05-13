@@ -4,8 +4,9 @@ import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import ru.safonov.convenient_software.test_task.dto.FileRequest;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,10 @@ import static java.util.Objects.isNull;
 @Service
 public class FileService {
     public int findMinNumFromFile(FileRequest req) {
-        try (Workbook book = WorkbookFactory.create(new File(req.getPath()))) {
+
+        Path normalizedPath = Paths.get(req.getPath());
+
+        try (Workbook book = WorkbookFactory.create(normalizedPath.toFile())) {
             int n = req.getN();
 
             Sheet sheet = book.getSheetAt(0);
@@ -22,16 +26,16 @@ public class FileService {
 
             for (Row row : sheet) {
                 Cell cell = row.getCell(0, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+
                 if (!isNull(cell) && cell.getCellType() == CellType.NUMERIC)
                     nums.add((int) cell.getNumericCellValue());
-
             }
 
             if (nums.isEmpty()) throw new IllegalArgumentException("Файл не содержит чисел!");
 
             if (n <= 0 || n > nums.size()) throw new IllegalArgumentException("Некорректный номер элемента N!");
 
-            return getMinFromList(nums, 0, nums.size() - 1, n - 1 );
+            return getMinFromList(nums, 0, nums.size() - 1, n - 1);
         } catch (IOException e) {
             throw new RuntimeException("Ошибка чтения: " + e.getMessage(), e);
         }
@@ -74,3 +78,5 @@ public class FileService {
         list.set(j, temp);
     }
 }
+
+
