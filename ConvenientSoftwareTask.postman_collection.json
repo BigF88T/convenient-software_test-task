@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "ee96f800-aa87-4375-bdb9-3552b54dfa34",
+		"name": "ConvenientSoftwareTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41536566"
+	},
+	"item": [
+		{
+			"name": "Find min num from \"пример.xlsx\" Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"path\": \"пример.xlsx\",\r\n  \"n\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/find-min",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"find-min"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
